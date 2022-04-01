@@ -1,6 +1,23 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from . import forms
+from . import models
 
 @login_required
 def feed(request):
-    return render(request, 'review/feed.html')
+    tickets = models.Ticket.objects.all()
+    return render(request, 'review/feed.html', context={'tickets': tickets})
+
+
+def ticket_add(request):
+    form = forms.TicketForm()
+    if request.method == 'POST':
+        form = forms.TicketForm(request.POST, request.FILES)
+        if form.is_valid():
+            ticket = form.save(commit=False)
+            # set the uploader to the user before saving the model
+            ticket.uploader = request.user
+            # now we can save
+            ticket.save()
+            return redirect('feed')
+    return render(request, 'review/ticket_add.html', context={'form': form})
