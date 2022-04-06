@@ -28,6 +28,7 @@ urlpatterns = [
     path('feed/', review.views.feed, name='feed'),
     path('signup/', authentication.views.signup_page, name='signup'),
     path('ticket/add', review.views.ticket_add, name='ticket_add'),
+    path('review/add', review.views.review_add, name='review_add'),
 ]
 if settings.DEBUG:
     urlpatterns += static(
