@@ -23,9 +23,7 @@ def ticket_add(request):
         form = forms.TicketForm(request.POST, request.FILES)
         if form.is_valid():
             ticket = form.save(commit=False)
-            # set the uploader to the user before saving the model
             ticket.user = request.user
-            # now we can save
             ticket.save()
             return redirect('feed')
     return render(request, 'review/ticket_add.html', context={'form': form})
@@ -71,3 +69,33 @@ def review_response(request, ticket_id):
         'ticket': ticket,
     }
     return render(request, 'review/review_response.html', context=context)
+
+
+@login_required
+def review_update(request, review_id):
+    review = models.Review.objects.get(id=review_id)
+    if request.method == 'POST':
+        edit_form = forms.ReviewForm(request.POST, instance=review)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect('feed')
+    else:
+        edit_form = forms.ReviewForm(instance=review)
+    context = {
+        'edit_form': edit_form,
+        'review': review,
+    }
+    return render(request, 'review/review_update.html', context=context)
+
+
+@login_required
+def ticket_update(request, ticket_id):
+    ticket = models.Ticket.objects.get(id=ticket_id)
+    if request.method == 'POST':
+        edit_form = forms.TicketForm(request.POST, instance=ticket)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect('feed')
+    else:
+        edit_form = forms.TicketForm(instance=ticket)
+    return render(request, 'review/ticket_update.html', context={'edit_form': edit_form})
