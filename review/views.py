@@ -70,4 +70,4 @@ def review_response(request, ticket_id):
         'review_form': review_form,
         'ticket': ticket,
     }
-    return render(request, 'review/review_add.html', context=context)
+    return render(request, 'review/review_response.html', context=context)
