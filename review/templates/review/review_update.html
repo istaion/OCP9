@@ -11,6 +11,13 @@
     <form method="post">
         {{ edit_form.as_p }}
         {% csrf_token %}
-        <button type="submit" >Publier</button>
+        <button type="submit" >Sauvegarder</button>
+    </form>
+    <hr>
+    <h3>Supprimer le commmentaire ?</h3>
+    <form method="post">
+        {{ delete_form }}
+        {% csrf_token %}
+        <button type="submit" >Supprimer</button>
     </form>
 {% endblock content %}

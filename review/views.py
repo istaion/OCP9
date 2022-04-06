@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from . import forms
 from . import models
@@ -72,7 +72,7 @@ def review_response(request, ticket_id):
 
 
 @login_required
-def review_update(request, review_id):
+def review_update2(request, review_id):
     review = models.Review.objects.get(id=review_id)
     if request.method == 'POST':
         edit_form = forms.ReviewForm(request.POST, instance=review)
@@ -89,13 +89,47 @@ def review_update(request, review_id):
 
 
 @login_required
-def ticket_update(request, ticket_id):
-    ticket = models.Ticket.objects.get(id=ticket_id)
+def review_update(request, review_id):
+    review = get_object_or_404(models.Review, id=review_id)
+    edit_form = forms.ReviewForm(instance=review)
+    delete_form = forms.DeleteReviewForm()
     if request.method == 'POST':
-        edit_form = forms.TicketForm(request.POST, instance=ticket)
-        if edit_form.is_valid():
-            edit_form.save()
-            return redirect('feed')
-    else:
-        edit_form = forms.TicketForm(instance=ticket)
-    return render(request, 'review/ticket_update.html', context={'edit_form': edit_form})
+        if 'edit_review' in request.POST:
+            edit_form = forms.ReviewForm(request.POST, instance=review)
+            if edit_form.is_valid():
+                edit_form.save()
+                return redirect('feed')
+        if 'delete_review' in request.POST:
+            delete_form = forms.DeleteReviewForm(request.POST)
+            if delete_form.is_valid():
+                review.delete()
+                return redirect('feed')
+    context = {
+        'edit_form': edit_form,
+        'delete_form': delete_form,
+        'review': review,
+    }
+    return render(request, 'review/review_update.html', context=context)
+
+
+@login_required
+def ticket_update(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    edit_form = forms.TicketForm(instance=ticket)
+    delete_form = forms.DeleteTicketForm()
+    if request.method == 'POST':
+        if 'edit_ticket' in request.POST:
+            edit_form = forms.TicketForm(request.POST, instance=ticket)
+            if edit_form.is_valid():
+                edit_form.save()
+                return redirect('feed')
+        if 'delete_ticket' in request.POST:
+            delete_form = forms.DeleteTicketForm(request.POST)
+            if delete_form.is_valid():
+                ticket.delete()
+                return redirect('feed')
+    context = {
+        'edit_form': edit_form,
+        'delete_form': delete_form,
+    }
+    return render(request, 'review/ticket_update.html', context=context)
