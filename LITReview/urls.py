@@ -29,6 +29,7 @@ urlpatterns = [
     path('signup/', authentication.views.signup_page, name='signup'),
     path('ticket/add', review.views.ticket_add, name='ticket_add'),
     path('review/add', review.views.review_add, name='review_add'),
+    path('review/<int:ticket_id>', review.views.review_response, name='review_response'),
 ]
 if settings.DEBUG:
     urlpatterns += static(

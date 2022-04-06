@@ -52,3 +52,22 @@ def review_add(request):
         'ticket_form': ticket_form,
     }
     return render(request, 'review/review_add.html', context=context)
+
+
+@login_required
+def review_response(request, ticket_id):
+    ticket = models.Ticket.objects.get(id=ticket_id)
+    review_form = forms.ReviewForm()
+    if request.method == 'POST':
+        review_form = forms.ReviewForm(request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.user = request.user
+            review.ticket = ticket
+            review.save()
+            return redirect('feed')
+    context = {
+        'review_form': review_form,
+        'ticket': ticket,
+    }
+    return render(request, 'review/review_add.html', context=context)
