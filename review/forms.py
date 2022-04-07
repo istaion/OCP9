@@ -21,3 +21,11 @@ class TicketForm(forms.ModelForm):
 
 class DeleteTicketForm(forms.Form):
     delete_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+
+
+class UserFollowsForm(forms.ModelForm):
+    class Meta:
+        model = models.UserFollows
+        fields = ['user', 'followed_user']
+        exclude = ['user']
+        labels = {'followed_user': 'Utilisateur à suivre :'}

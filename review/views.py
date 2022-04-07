@@ -133,3 +133,16 @@ def ticket_update(request, ticket_id):
         'delete_form': delete_form,
     }
     return render(request, 'review/ticket_update.html', context=context)
+
+
+@login_required
+def follow_users(request):
+    form = forms.UserFollowsForm(instance=request.user)
+    if request.method == 'POST':
+        form = forms.UserFollowsForm(request.POST, instance=request.user)
+        if form.is_valid():
+            follow = form.save(commit=False)
+            follow.user = request.user
+            follow.save()
+            return redirect('follow_users')
+    return render(request, 'review/follow_users.html', context={'form': form})
