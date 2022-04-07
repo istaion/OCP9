@@ -10,6 +10,8 @@
             {% if ticket.image %}
                 <img src="{{ ticket.image.url }}">
             {% endif %}
+            <a href="{% url 'review_response' ticket.id %}">Créer une critique en réponse</a>
+            <a href="{% url 'ticket_update' ticket.id %}">Modifier</a>
         </div>
     {% endfor %}
 
@@ -27,9 +29,7 @@
                 {% endif %}
             </div>
             <p>{{review.body}}</p>
-            {% if ticket.image %}
-                <img src="{{ ticket.image.url }}">
-            {% endif %}
+            <a href="{% url 'review_update' review.id %}">Modifier la critique</a>
         </div>
     {% endfor %}
 {% endblock content %}

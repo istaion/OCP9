@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Modifier le commentaire en réponse au ticket :</h2>
+    <div>
+        <h3>{{review.ticket.title}}</h3>
+        <p>{{review.ticket.description}}</p>
+        {% if review.ticket.image %}
+            <img src="{{ review.ticket.image.url }}">
+        {% endif %}
+    </div>
+    <form method="post">
+        {{ edit_form.as_p }}
+        {% csrf_token %}
+        <button type="submit" >Sauvegarder</button>
+    </form>
+    <hr>
+    <h3>Supprimer le commmentaire ?</h3>
+    <form method="post">
+        {{ delete_form }}
+        {% csrf_token %}
+        <button type="submit" >Supprimer</button>
+    </form>
+{% endblock content %}
