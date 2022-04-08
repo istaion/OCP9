@@ -6,4 +6,18 @@
         {% csrf_token %}
         <button type="submit" >Confirmer</button>
     </form>
+     <div>
+         <h2>Abonnements :</h2>
+         {% for follow in following %}
+            <p>{{follow.followed_user.username}}<p>
+         {% endfor %}
+     </div>
+
+     <div>
+         <h2>Abonnés :</h2>
+         {% for follow in followed_by %}
+            <p>{{follow.user.username}}<p>
+         {% endfor %}
+     </div>
+
 {% endblock content %}

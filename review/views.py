@@ -7,8 +7,8 @@ from authentication.models import User
 
 @login_required
 def feed(request):
-    tickets = models.Ticket.objects.filter(user = request.user)
-    reviews = models.Review.objects.filter(user = request.user)
+    tickets = models.Ticket.objects.filter(user=request.user)
+    reviews = models.Review.objects.filter(user=request.user)
     context = {
         'reviews': reviews,
         'tickets': tickets,
@@ -137,12 +137,19 @@ def ticket_update(request, ticket_id):
 
 @login_required
 def follow_users(request):
-    form = forms.UserFollowsForm(instance=request.user)
+    following = request.user.following.all()
+    followed_by = request.user.followed_by.all()
+    form = forms.UserFollowsForm()
     if request.method == 'POST':
-        form = forms.UserFollowsForm(request.POST, instance=request.user)
+        form = forms.UserFollowsForm(request.POST)
         if form.is_valid():
             follow = form.save(commit=False)
             follow.user = request.user
             follow.save()
             return redirect('follow_users')
-    return render(request, 'review/follow_users.html', context={'form': form})
+    context = {
+        'form': form,
+        'following': following,
+        'followed_by': followed_by,
+    }
+    return render(request, 'review/follow_users.html', context=context)
