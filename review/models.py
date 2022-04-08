@@ -23,9 +23,6 @@ class Ticket(models.Model):
         super().save(*args, **kwargs)
         self.resize_image()
 
-    def include_html(self):
-        pass
-
 
 class Review(models.Model):
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)

@@ -1,18 +1,30 @@
-html {
-    font-family: Arial;
-}
-
-body {
-  background-color: red;
-}
-
-
-.best-movie {
+.ticket {
   border: 15px;
   padding: 15px;
   box-shadow: 3px 3px 5px 1px #49575d;
   box-sizing: content-box;
   background-color: #54646b;
   border-radius: 5px;
-  display: flex;
+}
+
+.review {
+  border: 15px;
+  padding: 15px;
+  box-shadow: 3px 3px 5px 1px #49575d;
+  box-sizing: content-box;
+  background-color: red;
+  border-radius: 5px;
+}
+
+.ticket__user {
+    font-size: small;
+}
+
+.ticket__time {
+    font-size: small;
+    text-align: right;
+}
+
+.ticket__link {
+    text-align: center
 }

@@ -1,0 +1,16 @@
+<div class="review">
+    {% if review.user == request.user %}
+        <p class="review__user">Vous avez publié une critique</p>
+    {% else %}
+        <p class="review__user">{{ticket.user}} a publié une critique</p>
+    {% endif %}
+    <p class="review__time">{{review.time_created}} </p>
+    <h3>{{review.headline}}</h3>
+    <p>{{review.rating}}</p>
+    <div>
+        <p>Commentaire du ticket :</p>
+        {% include 'review/ticket.html' with ticket=review.ticket %}
+    </div>
+    <p>{{review.body}}</p>
+    <a href="{% url 'review_update' review.id %}">Modifier la critique</a>
+</div>
