@@ -5,14 +5,18 @@
     <a href="{% url 'follow_users' %}">abonnement</a>
     <h2>Tickets</h2>
     {% for ticket in tickets %}
-        <div>
+        <div class="ticket">
+            <p>{{ticket.user}} a demandé une critique</p>
+            <p>{{ticket.time_created}} </p>
             <h3>{{ticket.title}}</h3>
             <p>{{ticket.description}}</p>
             {% if ticket.image %}
                 <img src="{{ ticket.image.url }}">
             {% endif %}
-            <a href="{% url 'review_response' ticket.id %}">Créer une critique en réponse</a>
-            <a href="{% url 'ticket_update' ticket.id %}">Modifier</a>
+            <a href="{% url 'review_response' ticket.id %}">Créer une critique</a>
+            {% if ticket.user == request.user %}
+                <a href="{% url 'ticket_update' ticket.id %}">Modifier</a>
+            {% endif %}
         </div>
     {% endfor %}
 
