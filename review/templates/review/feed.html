@@ -6,9 +6,9 @@
     <h2>Tickets</h2>
     {% for ticket in tickets %}
         <div class="ticket">
-            <p>{{ticket.user}} a demandé une critique</p>
-            <p>{{ticket.time_created}} </p>
-            <h3>{{ticket.title}}</h3>
+            <p class="ticket__user">{{ticket.user}} a demandé une critique</p>
+            <p class="ticket__time">{{ticket.time_created}} </p>
+            <h3 class="ticket__title">{{ticket.title}}</h3>
             <p>{{ticket.description}}</p>
             {% if ticket.image %}
                 <img src="{{ ticket.image.url }}">
