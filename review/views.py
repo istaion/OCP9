@@ -72,23 +72,6 @@ def review_response(request, ticket_id):
 
 
 @login_required
-def review_update2(request, review_id):
-    review = models.Review.objects.get(id=review_id)
-    if request.method == 'POST':
-        edit_form = forms.ReviewForm(request.POST, instance=review)
-        if edit_form.is_valid():
-            edit_form.save()
-            return redirect('feed')
-    else:
-        edit_form = forms.ReviewForm(instance=review)
-    context = {
-        'edit_form': edit_form,
-        'review': review,
-    }
-    return render(request, 'review/review_update.html', context=context)
-
-
-@login_required
 def review_update(request, review_id):
     review = get_object_or_404(models.Review, id=review_id)
     edit_form = forms.ReviewForm(instance=review)
