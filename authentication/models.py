@@ -4,4 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    pass
+    follows = models.ManyToManyField('self',
+                                     through='review.UserFollows',
+                                     symmetrical=False,
+                                     related_name='followed')

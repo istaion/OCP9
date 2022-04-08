@@ -2,6 +2,7 @@
 {% block content %}
     <a href="{% url 'ticket_add' %}">Créer ticket</a>
     <a href="{% url 'review_add' %}">Créer commentaire</a>
+    <a href="{% url 'follow_users' %}">abonnement</a>
     <h2>Tickets</h2>
     {% for ticket in tickets %}
         <div>

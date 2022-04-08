@@ -30,6 +30,12 @@ class UserFollows(models.Model):
     followed_user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='followed_by')
 
+    def to_dict(self):
+        return {
+            'user': self.user,
+            'followed_user': self.followed_user
+        }
+
     class Meta:
         # ensures we don't get multiple UserFollows instances
         # for unique user-user_followed pairs
