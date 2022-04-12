@@ -2,8 +2,19 @@ from django import forms
 
 from . import models
 
+RATING_CHOICES = [
+    (0, '0'),
+    (1, '1'),
+    (2, '2'),
+    (3, '3'),
+    (4, '4'),
+    (5, '5')
+]
+
 
 class ReviewForm(forms.ModelForm):
+    rating = forms.ChoiceField(widget=forms.RadioSelect, choices=RATING_CHOICES)
+
     class Meta:
         model = models.Review
         fields = ['headline', 'rating', 'body']

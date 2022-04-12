@@ -1,30 +1,41 @@
 .ticket {
-  border: 15px;
+  border: 2px;
   padding: 15px;
-  box-shadow: 3px 3px 5px 1px #49575d;
   box-sizing: content-box;
-  background-color: #54646b;
+  border-style: solid;
   border-radius: 5px;
+}
+.ticket__user {
+  font-size: small;
+}
+.ticket__time {
+  font-size: x-small;
+  text-align: right;
+}
+.ticket__link {
+  text-align: center;
 }
 
 .review {
-  border: 15px;
+  border: 2px;
   padding: 15px;
-  box-shadow: 3px 3px 5px 1px #49575d;
   box-sizing: content-box;
-  background-color: red;
+  border-style: solid;
   border-radius: 5px;
 }
-
-.ticket__user {
-    font-size: small;
+.review__user {
+  font-size: small;
+}
+.review__time {
+  font-size: x-small;
+  text-align: right;
+}
+.review__link {
+  text-align: center;
 }
 
-.ticket__time {
-    font-size: small;
-    text-align: right;
+#id_rating {
+  display: flex;
 }
 
-.ticket__link {
-    text-align: center
-}
+/*# sourceMappingURL=app.css.map */

@@ -1,19 +1,29 @@
 <div class="ticket">
-    {% if ticket.user == request.user %}
-        <p class="ticket__user">Vous avez demandé une critique</p>
+    {% if detailed %}
+        {% if ticket.user == request.user %}
+            <p class="ticket__user">Vous avez demandé une critique</p>
+        {% else %}
+            <p class="ticket__user">{{ticket.user}} a demandé une critique</p>
+        {% endif %}
     {% else %}
-        <p class="ticket__user">{{ticket.user}} a demandé une critique</p>
+        {% if ticket.user == request.user %}
+            <p class="ticket__user">Votre ticket</p>
+        {% else %}
+            <p class="ticket__user">Ticket - {{ticket.user}}</p>
+        {% endif %}
     {% endif %}
-    <p class="ticket__time">{{ticket.time_created}} </p>
+    {% if detailed %}
+        <p class="ticket__time">{{ticket.time_created}} </p>
+    {% endif %}
     <h3 class="ticket__title">{{ticket.title}}</h3>
     <p>{{ticket.description}}</p>
     {% if ticket.image %}
         <img src="{{ ticket.image.url }}">
     {% endif %}
     <p class="ticket__link">
-        <a href="{% url 'review_response' ticket.id %}">Créer une critique</a>
+        <button><a href="{% url 'review_response' ticket.id %}">Créer une critique</a></button>
         {% if ticket.user == request.user %}
-            <a href="{% url 'ticket_update' ticket.id %}">Modifier</a>
+            <button><a href="{% url 'ticket_update' ticket.id %}">Modifier</a></button>
         {% endif %}
     </p>
 </div>

@@ -7,8 +7,8 @@ from authentication.models import User
 
 @login_required
 def feed(request):
-    tickets = models.Ticket.objects.filter(user=request.user)
-    reviews = models.Review.objects.filter(user=request.user)
+    tickets = models.Ticket.objects.filter(user__in=request.user.follows.all())
+    reviews = models.Review.objects.filter(user__in=request.user.follows.all())
     context = {
         'reviews': reviews,
         'tickets': tickets,

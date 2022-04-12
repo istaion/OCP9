@@ -5,7 +5,7 @@
     <a href="{% url 'follow_users' %}">abonnement</a>
     <h2>Tickets</h2>
     {% for ticket in tickets %}
-        {% include 'review/ticket.html' with ticket=ticket %}
+        {% include 'review/ticket.html' with ticket=ticket detailed=True %}
     {% endfor %}
 
     <h2>Reviews</h2>
