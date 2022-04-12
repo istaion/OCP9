@@ -1,13 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <h2>Créer un commentaire en réponse au ticket :</h2>
-    <div>
-        <h3>{{ticket.title}}</h3>
-        <p>{{ticket.description}}</p>
-        {% if ticket.image %}
-            <img src="{{ ticket.image.url }}">
-        {% endif %}
-    </div>
+    {% include 'review/partial/ticket.html' with ticket=ticket detailed=False %}
     <form method="post" enctype="multipart/form-data">
         {{ review_form.as_p }}
         {% csrf_token %}

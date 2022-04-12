@@ -1,10 +1,11 @@
+{% load review_extras %}
 <div class="review">
     {% if review.user == request.user %}
         <p class="review__user">Vous avez publié une critique</p>
     {% else %}
         <p class="review__user">{{review.user}} a publié une critique</p>
     {% endif %}
-    <p class="review__time">{{review.time_created}} </p>
+    <p class="review__time">{{review.time_created|get_posted_at_display }} </p>
     <h3>{{review.headline}} -
         {% if review.rating == 0 %}
             <i class="review__rating__star">☆☆☆☆☆</i>
@@ -22,9 +23,11 @@
     </h3>
     <p>{{review.body}}</p>
     <div>
-        {% include 'review/ticket.html' with ticket=review.ticket detailed=False %}
+        {% include 'review/partial/ticket.html' with ticket=review.ticket detailed=False %}
     </div>
-    {% if review.user == request.user %}
-        <a href="{% url 'review_update' review.id %}">Modifier la critique</a>
+    {% if update_button %}
+        {% if review.user == request.user %}
+            <a href="{% url 'review_update' review.id %}">Modifier la critique</a>
+        {% endif %}
     {% endif %}
 </div>

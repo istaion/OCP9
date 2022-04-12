@@ -1,3 +1,4 @@
+{% load review_extras %}
 <div class="ticket">
     {% if detailed %}
         {% if ticket.user == request.user %}
@@ -13,7 +14,7 @@
         {% endif %}
     {% endif %}
     {% if detailed %}
-        <p class="ticket__time">{{ticket.time_created}} </p>
+        <p class="ticket__time">{{ticket.time_created|get_posted_at_display }}</p>
     {% endif %}
     <h3 class="ticket__title">{{ticket.title}}</h3>
     <p>{{ticket.description}}</p>

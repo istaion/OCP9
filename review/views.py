@@ -1,17 +1,22 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from itertools import chain
 from . import forms
 from . import models
-from authentication.models import User
 
 
 @login_required
 def feed(request):
-    tickets = models.Ticket.objects.filter(user__in=request.user.follows.all())
-    reviews = models.Review.objects.filter(user__in=request.user.follows.all())
+    tickets = models.Ticket.objects.filter(Q(user__in=request.user.follows.all()) | Q(user=request.user))
+    reviews = models.Review.objects.filter(Q(user__in=request.user.follows.all()) | Q(user=request.user))
+    tickets_and_reviews = sorted(
+        chain(tickets, reviews),
+        key=lambda instance: instance.time_created,
+        reverse=True
+    )
     context = {
-        'reviews': reviews,
-        'tickets': tickets,
+        'tickets_and_reviews': tickets_and_reviews
     }
     return render(request, 'review/feed.html', context=context)
 
