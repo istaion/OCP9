@@ -143,8 +143,9 @@ def follow_users(request):
     return render(request, 'review/follow_users.html', context=context)
 
 @login_required
-def stop_follow(request, followed_user):
-    follow = get_object_or_404(models.UserFollows, Q(user=request.user) | Q(followed_user=followed_user))
+def stop_follow(request, follow_id):
+    follow = get_object_or_404(models.UserFollows, id=follow_id)
+    followed_user = follow.followed_user
     stop_follow_form = forms.DeleteUserFollowsForm()
     if request.method == 'POST':
         stop_follow_form = forms.DeleteUserFollowsForm(request.POST)
