@@ -1,6 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.db import models
+from PIL import Image
 
 
 class Ticket(models.Model):
@@ -10,6 +11,19 @@ class Ticket(models.Model):
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
+    contributors = models.ManyToManyField(settings.AUTH_USER_MODEL, through='TicketContributor',
+                                          related_name='contributions')
+    IMAGE_MAX_SIZE = (400, 400)
+
+    def resize_image(self):
+        if self.image:
+            image = Image.open(self.image)
+            image.thumbnail(self.IMAGE_MAX_SIZE)
+            image.save(self.image.path)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.resize_image()
 
 
 class Review(models.Model):
@@ -22,6 +36,15 @@ class Review(models.Model):
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)
+
+
+class TicketContributor(models.Model):
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('contributor', 'ticket')
 
 
 class UserFollows(models.Model):

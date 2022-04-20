@@ -1,0 +1,32 @@
+{% load review_extras %}
+<div class="ticket">
+    {% if detailed %}
+        {% if ticket.user == request.user %}
+            <p class="ticket__user">Vous avez demandé une critique</p>
+        {% else %}
+            <p class="ticket__user">{{ticket.user}} a demandé une critique</p>
+        {% endif %}
+    {% else %}
+        {% if ticket.user == request.user %}
+            <p class="ticket__user">Votre ticket</p>
+        {% else %}
+            <p class="ticket__user">Ticket - {{ticket.user}}</p>
+        {% endif %}
+    {% endif %}
+    {% if detailed %}
+        <p class="ticket__time">{{ticket.time_created|get_posted_at_display }}</p>
+    {% endif %}
+    <h3 class="ticket__title">{{ticket.title}}</h3>
+    <p>{{ticket.description}}</p>
+    {% if ticket.image %}
+        <img src="{{ ticket.image.url }}">
+    {% endif %}
+    <p class="ticket__link">
+        {% if not request.user in ticket|contributor_list %}
+            <button><a href="{% url 'review_response' ticket.id %}">Créer une critique</a></button>
+        {% endif %}
+        {% if ticket.user == request.user %}
+            <button><a href="{% url 'ticket_update' ticket.id %}">Modifier</a></button>
+        {% endif %}
+    </p>
+</div>

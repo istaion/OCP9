@@ -1,17 +1,22 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from itertools import chain
 from . import forms
 from . import models
-from authentication.models import User
 
 
 @login_required
 def feed(request):
-    tickets = models.Ticket.objects.filter(user=request.user)
-    reviews = models.Review.objects.filter(user=request.user)
+    tickets = models.Ticket.objects.filter(Q(user__in=request.user.follows.all()) | Q(user=request.user))
+    reviews = models.Review.objects.filter(Q(user__in=request.user.follows.all()) | Q(user=request.user))
+    tickets_and_reviews = sorted(
+        chain(tickets, reviews),
+        key=lambda instance: instance.time_created,
+        reverse=True
+    )
     context = {
-        'reviews': reviews,
-        'tickets': tickets,
+        'tickets_and_reviews': tickets_and_reviews
     }
     return render(request, 'review/feed.html', context=context)
 
@@ -44,6 +49,8 @@ def review_add(request):
             review.user = request.user
             review.ticket = ticket
             review.save()
+            ticket.contributors.add(request.user, through_defaults={'review': review})
+            ticket.save()
             return redirect('feed')
     context = {
         'review_form': review_form,
@@ -63,29 +70,14 @@ def review_response(request, ticket_id):
             review.user = request.user
             review.ticket = ticket
             review.save()
+            ticket.contributors.add(request.user, through_defaults={'review': review})
+            ticket.save()
             return redirect('feed')
     context = {
         'review_form': review_form,
         'ticket': ticket,
     }
     return render(request, 'review/review_response.html', context=context)
-
-
-@login_required
-def review_update2(request, review_id):
-    review = models.Review.objects.get(id=review_id)
-    if request.method == 'POST':
-        edit_form = forms.ReviewForm(request.POST, instance=review)
-        if edit_form.is_valid():
-            edit_form.save()
-            return redirect('feed')
-    else:
-        edit_form = forms.ReviewForm(instance=review)
-    context = {
-        'edit_form': edit_form,
-        'review': review,
-    }
-    return render(request, 'review/review_update.html', context=context)
 
 
 @login_required
@@ -139,17 +131,33 @@ def ticket_update(request, ticket_id):
 def follow_users(request):
     following = request.user.following.all()
     followed_by = request.user.followed_by.all()
-    form = forms.UserFollowsForm()
+    follow_form = forms.UserFollowsForm()
     if request.method == 'POST':
-        form = forms.UserFollowsForm(request.POST)
-        if form.is_valid():
-            follow = form.save(commit=False)
+        follow_form = forms.UserFollowsForm(request.POST)
+        if follow_form.is_valid():
+            follow = follow_form.save(commit=False)
             follow.user = request.user
             follow.save()
             return redirect('follow_users')
     context = {
-        'form': form,
+        'follow_form': follow_form,
         'following': following,
         'followed_by': followed_by,
     }
     return render(request, 'review/follow_users.html', context=context)
+
+@login_required
+def stop_follow(request, follow_id):
+    follow = get_object_or_404(models.UserFollows, id=follow_id)
+    followed_user = follow.followed_user
+    stop_follow_form = forms.DeleteUserFollowsForm()
+    if request.method == 'POST':
+        stop_follow_form = forms.DeleteUserFollowsForm(request.POST)
+        if stop_follow_form.is_valid():
+            follow.delete()
+            return redirect('follow_users')
+    context = {
+        'stop_follow_form': stop_follow_form,
+        'followed_user': followed_user,
+    }
+    return render(request, 'review/follow_delete.html', context=context)

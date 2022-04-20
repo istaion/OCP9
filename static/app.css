@@ -1,0 +1,78 @@
+.ticket {
+  border: 2px;
+  padding: 15px;
+  margin-top: 25px;
+  box-sizing: content-box;
+  border-style: solid;
+  border-radius: 5px;
+}
+.ticket__user {
+  font-size: small;
+}
+.ticket__time {
+  font-size: x-small;
+  text-align: right;
+}
+.ticket__link {
+  text-align: center;
+}
+
+.review {
+  border: 2px;
+  padding: 15px;
+  margin-top: 25px;
+  box-sizing: content-box;
+  border-style: solid;
+  border-radius: 5px;
+}
+.review__user {
+  font-size: small;
+}
+.review__time {
+  font-size: x-small;
+  text-align: right;
+}
+.review__link {
+  text-align: center;
+}
+
+#id_rating {
+  display: flex;
+}
+
+/* The sidebar menu */
+.sidebar {
+  display: flex;
+  align-items: center;
+  border: 2px;
+  box-sizing: content-box;
+  border-style: solid;
+  border-radius: 2px;
+}
+.sidebar p {
+  float: right;
+  width: 40%;
+  padding: 14px 16px;
+}
+.sidebar h1 {
+  width: 20%;
+  text-align: center;
+}
+.sidebar ul {
+  display: flex;
+  align: right;
+  width: 650px;
+}
+.sidebar ul li {
+  display: inline-block;
+  padding: 14px 16px;
+}
+.sidebar ul li a {
+  text-decoration: none;
+  color: black;
+}
+.sidebar ul li a:hover {
+  color: blue;
+}
+
+/*# sourceMappingURL=app.css.map */

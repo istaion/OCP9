@@ -2,14 +2,14 @@
 {% block content %}
     <h2>Suivre des utilisateurs</h2>
     <form method="post">
-        {{ form.as_p }}
+        {{ follow_form.as_p }}
         {% csrf_token %}
         <button type="submit" >Confirmer</button>
     </form>
      <div>
          <h2>Abonnements :</h2>
          {% for follow in following %}
-            <p>{{follow.followed_user.username}}<p>
+            <p>{{follow.followed_user.username}}<a href="{% url 'stop_follow' follow.id %}">se désabonner</a><p>
          {% endfor %}
      </div>
 
