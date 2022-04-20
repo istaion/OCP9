@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p>Voulez vous vraiment vous désaboner de l'utilisateur : {{ followed_user.username }} ?</p>
+    <form method="post">
+        {{ stop_follow_form }}
+        {% csrf_token %}
+        <button type="submit" >Oui</button> <button><a href="{% url 'follow_users' %}">retour</a></button>
+    </form>
+{% endblock content %}

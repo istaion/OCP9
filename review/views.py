@@ -127,17 +127,32 @@ def ticket_update(request, ticket_id):
 def follow_users(request):
     following = request.user.following.all()
     followed_by = request.user.followed_by.all()
-    form = forms.UserFollowsForm()
+    follow_form = forms.UserFollowsForm()
     if request.method == 'POST':
-        form = forms.UserFollowsForm(request.POST)
-        if form.is_valid():
-            follow = form.save(commit=False)
+        follow_form = forms.UserFollowsForm(request.POST)
+        if follow_form.is_valid():
+            follow = follow_form.save(commit=False)
             follow.user = request.user
             follow.save()
             return redirect('follow_users')
     context = {
-        'form': form,
+        'follow_form': follow_form,
         'following': following,
         'followed_by': followed_by,
     }
     return render(request, 'review/follow_users.html', context=context)
+
+@login_required
+def stop_follow(request, followed_user):
+    follow = get_object_or_404(models.UserFollows, Q(user=request.user) | Q(followed_user=followed_user))
+    stop_follow_form = forms.DeleteUserFollowsForm()
+    if request.method == 'POST':
+        stop_follow_form = forms.DeleteUserFollowsForm(request.POST)
+        if stop_follow_form.is_valid():
+            follow.delete()
+            return redirect('follow_users')
+    context = {
+        'stop_follow_form': stop_follow_form,
+        'followed_user': followed_user,
+    }
+    return render(request, 'review/follow_delete.html', context=context)
