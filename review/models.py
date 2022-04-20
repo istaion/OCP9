@@ -11,6 +11,8 @@ class Ticket(models.Model):
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
+    contributors = models.ManyToManyField(settings.AUTH_USER_MODEL, through='TicketContributor',
+                                          related_name='contributions')
     IMAGE_MAX_SIZE = (400, 400)
 
     def resize_image(self):
@@ -34,6 +36,15 @@ class Review(models.Model):
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)
+
+
+class TicketContributor(models.Model):
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('contributor', 'ticket')
 
 
 class UserFollows(models.Model):

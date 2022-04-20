@@ -22,7 +22,9 @@
         <img src="{{ ticket.image.url }}">
     {% endif %}
     <p class="ticket__link">
-        <button><a href="{% url 'review_response' ticket.id %}">Créer une critique</a></button>
+        {% if not request.user in ticket|contributor_list %}
+            <button><a href="{% url 'review_response' ticket.id %}">Créer une critique</a></button>
+        {% endif %}
         {% if ticket.user == request.user %}
             <button><a href="{% url 'ticket_update' ticket.id %}">Modifier</a></button>
         {% endif %}

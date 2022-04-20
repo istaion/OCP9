@@ -21,3 +21,9 @@ def get_posted_at_display(posted_at):
     elif seconds_ago <= DAY:
         return f'Publié il y a {int(seconds_ago // HOUR)} heures.'
     return f'Publié le {posted_at.strftime("%d %b %y à %Hh%M")}'
+
+
+@register.filter
+def contributor_list(ticket):
+    list = ticket.contributors.all()
+    return list

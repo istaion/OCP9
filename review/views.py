@@ -49,6 +49,8 @@ def review_add(request):
             review.user = request.user
             review.ticket = ticket
             review.save()
+            ticket.contributors.add(request.user, through_defaults={'review': review})
+            ticket.save()
             return redirect('feed')
     context = {
         'review_form': review_form,
@@ -68,6 +70,8 @@ def review_response(request, ticket_id):
             review.user = request.user
             review.ticket = ticket
             review.save()
+            ticket.contributors.add(request.user, through_defaults={'review': review})
+            ticket.save()
             return redirect('feed')
     context = {
         'review_form': review_form,
