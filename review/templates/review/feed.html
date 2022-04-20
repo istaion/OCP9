@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% load review_extras %}
 {% block content %}
-    <a href="{% url 'ticket_add' %}">Créer ticket</a>
-    <a href="{% url 'review_add' %}">Créer commentaire</a>
-    <a href="{% url 'follow_users' %}">abonnement</a>
     {% for instance in tickets_and_reviews %}
         {% if instance|model_type == 'Ticket' %}
             {% include 'review/partial/ticket.html' with ticket=instance detailed=True %}

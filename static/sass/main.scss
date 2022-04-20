@@ -30,3 +30,37 @@
     display: flex;
 }
 
+/* The sidebar menu */
+.sidebar {
+    display: flex;
+    align-items: center;
+    border: 2px;
+    box-sizing: content-box;
+    border-style: solid;
+    border-radius:2px;
+    & p {
+        float: right;
+        width: 40%;
+        padding: 14px 16px;
+    }
+    & h1 {
+        width: 20%;
+        text-align: center;
+    }
+    & ul {
+        display: flex;
+        align: right;
+        width: 650px;
+        & li {
+        display: inline-block;
+        padding: 14px 16px;
+            & a {
+                text-decoration: none;
+                color: black;
+                &:hover {
+                    color: blue;
+                }
+            }
+        }
+    }
+}

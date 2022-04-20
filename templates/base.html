@@ -5,10 +5,22 @@
         <link rel="stylesheet" href="{% static 'app.css' %}">
     </head>
     <body>
-        <h1>LITReview</h1>
+        <div class="sidebar">
+            {% if user.is_authenticated %}
+                <p>Utilisateur : {{ request.user }} </p>
+                <h1>LITReview</h1>
+                <nav class="menu">
+                    <ul>
+                        <li><a href="{% url 'ticket_add' %}">Créer ticket</a></li>
+                        <li><a href="{% url 'review_add' %}">Créer commentaire</a></li>
+                        <li><a href="{% url 'follow_users' %}">abonnement</a></li>
+                        <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
+                    </ul>
+                </nav>
+            {% else %}
+                <h1>LITReview</h1>
+            {% endif %}
+        </div>
         {% block content %}{% endblock content %}
-        {%  if user.is_authenticated %}
-            <p>Vous êtes connecté en tant que {{ request.user }}. <a href="{% url 'logout' %}">Se déconnecter</a></p>
-        {% endif %}
     </body>
 </html>
