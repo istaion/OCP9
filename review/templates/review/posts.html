@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
 {% load review_extras %}
 {% block content %}
-<div class="feed_button">
-    <button><a href="{% url 'ticket_add' %}">Demander une critique</a></button>
-    <button><a href="{% url 'review_add' %}">Créer une critique</a></button>
-</div>
+<h2>Vos posts :</h2>
     {% for instance in tickets_and_reviews %}
         {% if instance|model_type == 'Ticket' %}
             {% include 'review/partial/ticket.html' with ticket=instance detailed=True %}
