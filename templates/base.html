@@ -11,14 +11,14 @@
                 <h1>LITReview</h1>
                 <nav class="menu">
                     <ul>
-                        <li><a href="{% url 'ticket_add' %}">Créer ticket</a></li>
-                        <li><a href="{% url 'review_add' %}">Créer commentaire</a></li>
+                        <li><a href="{% url 'feed' %}">Flux</a></li>
+                        <li><a href="{% url 'posts' %}">Posts</a></li>
                         <li><a href="{% url 'follow_users' %}">abonnement</a></li>
                         <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
                     </ul>
                 </nav>
             {% else %}
-                <h1>LITReview</h1>
+                <h1 id="disconnected">LITReview</h1>
             {% endif %}
         </div>
         {% block content %}{% endblock content %}

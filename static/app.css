@@ -18,6 +18,10 @@
 .ticket__link {
   text-align: center;
 }
+.ticket__edit {
+  display: flex;
+  justify-content: right;
+}
 
 .review {
   border: 2px;
@@ -39,9 +43,14 @@
 .review__link {
   text-align: center;
 }
+.review__edit {
+  display: flex;
+  justify-content: right;
+}
 
 #id_rating {
   display: flex;
+  justify-content: space-around;
 }
 
 /* The sidebar menu */
@@ -77,6 +86,125 @@
 }
 .sidebar ul li a:hover {
   color: blue;
+}
+
+#disconnected {
+  width: 100%;
+}
+
+.login {
+  display: flex;
+  border: 10px;
+  box-sizing: content-box;
+  align-items: center;
+}
+.login div {
+  width: 50%;
+  border: 10px;
+  display: block;
+  box-sizing: content-box;
+  align-items: center;
+  text-align: center;
+}
+
+.signup {
+  width: 50%;
+  border: 10px;
+  display: block;
+  box-sizing: content-box;
+  margin-left: 25%;
+  align-items: center;
+  text-align: center;
+}
+.signup .helptext {
+  visibility: hidden;
+  position: absolute;
+  opacity: 0;
+}
+.signup input:hover + .helptext {
+  visibility: visible;
+  opacity: 1;
+}
+.signup ul {
+  visibility: hidden;
+  position: absolute;
+  opacity: 0;
+}
+.signup input:hover + ul {
+  visibility: visible;
+  opacity: 1;
+}
+
+.add_user {
+  border: 2px;
+  padding: 15px;
+  margin-top: 25px;
+  margin-left: 60px;
+  margin-right: 60px;
+  box-sizing: content-box;
+  border-style: solid;
+  border-radius: 5px;
+}
+.add_user form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user_follow {
+  border: 2px;
+  padding: 15px;
+  margin-top: 25px;
+  margin-left: 60px;
+  margin-right: 60px;
+  box-sizing: content-box;
+  border-style: solid;
+  border-radius: 5px;
+}
+.user_follow div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.review_form {
+  border: 2px;
+  padding: 15px;
+  margin-top: 25px;
+  margin-left: 60px;
+  margin-right: 60px;
+  box-sizing: content-box;
+  border-style: solid;
+  border-radius: 5px;
+}
+.review_form input, .review_form textarea {
+  width: 100%;
+}
+.review_form #image-clear_id {
+  width: 15px;
+}
+
+.feed_button {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.feed_button button {
+  margin: 10px;
+  font-size: Large;
+}
+
+button {
+  margin: 2px;
+  padding: 2px;
+}
+button a {
+  text-decoration: none;
+  color: black;
+}
+
+h2 {
+  text-align: center;
 }
 
 /*# sourceMappingURL=app.css.map */

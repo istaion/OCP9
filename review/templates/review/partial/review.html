@@ -27,7 +27,10 @@
     </div>
     {% if update_button %}
         {% if review.user == request.user %}
-            <a href="{% url 'review_update' review.id %}">Modifier la critique</a>
+            <div class="review__edit">
+                <button><a href="{% url 'review_update' review.id %}">Modifier la critique</a></button>
+                <button><a href="{% url 'delete' review.id 'Review' %}">Supprimer</a></button>
+            </div>
         {% endif %}
     {% endif %}
 </div>

@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Créer un commentaire en réponse au ticket :</h2>
-    {% include 'review/partial/ticket.html' with ticket=ticket detailed=False %}
-    <form method="post" enctype="multipart/form-data">
-        {{ review_form.as_p }}
-        {% csrf_token %}
-        <button type="submit" >Publier</button>
-    </form>
+    <div class="review_form">
+        <h2>Créer une critique</h2>
+        <p>Vous êtes en train de poster en réponse à :</p>
+        {% include 'review/partial/ticket.html' with ticket=ticket detailed=False %}
+        <hr>
+        <form method="post" enctype="multipart/form-data">
+            {{ review_form.as_p }}
+            {% csrf_token %}
+            <button type="submit" >Publier</button>
+        </form>
+    </div>
 {% endblock content %}

@@ -1,16 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Modifier le ticket</h2>
-    <form method="post">
-        {{ edit_form.as_p }}
-        {% csrf_token %}
-        <button type="submit" >Sauvegarder</button>
-    </form>
-    <hr>
-    <h3>Supprimer le ticket ?</h3>
-    <form method="post">
-        {{ delete_form }}
-        {% csrf_token %}
-        <button type="submit" >Supprimer</button>
-    </form>
+    <div class="review_form">
+        <h2>Modifier le ticket</h2>
+        <form method="post">
+            {{ edit_form.as_p }}
+            {% csrf_token %}
+            <button type="submit" >Sauvegarder</button>
+        </form>
+        <hr>
+        <h3>Supprimer le ticket ?</h3>
+        <button><a href="{% url 'delete' ticket.id 'Ticket' %}">Supprimer</a></button>
+    </div>
 {% endblock content %}

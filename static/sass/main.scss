@@ -1,4 +1,4 @@
-@mixin feed-box{
+@mixin box{
   border: 2px;
   padding: 15px;
   margin-top: 25px;
@@ -7,6 +7,10 @@
   box-sizing: content-box;
   border-style: solid;
   border-radius:5px;
+}
+
+@mixin feed-box{
+  @include box;
   &__user {
   font-size: small;
   }
@@ -16,6 +20,10 @@
   }
   &__link {
     text-align: center
+  }
+  &__edit {
+    display:flex;
+    justify-content: right;
   }
 }
 
@@ -30,6 +38,7 @@
 
 #id_rating {
     display: flex;
+    justify-content: space-around;
 }
 
 /* The sidebar menu */
@@ -65,4 +74,102 @@
             }
         }
     }
+}
+
+#disconnected {
+            width: 100%;
+        }
+
+.login {
+    display: flex;
+    border: 10px;
+    box-sizing: content-box;
+    align-items: center;
+    & div {
+        width: 50%;
+        border: 10px;
+        display: block;
+        box-sizing: content-box;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+.signup {
+    width: 50%;
+    border: 10px;
+    display: block;
+    box-sizing: content-box;
+    margin-left: 25%;
+    align-items: center;
+    text-align: center;
+    & .helptext {
+        visibility: hidden;
+        position: absolute;
+        opacity: 0;
+    }
+    & input:hover + .helptext {
+        visibility: visible;
+        opacity: 1;
+    }
+    & ul {
+        visibility: hidden;
+        position: absolute;
+        opacity: 0;
+    }
+    & input:hover + ul {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+.add_user {
+    @include box;
+    & form {
+        display:flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.user_follow {
+    @include box;
+    & div {
+        display:flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.review_form {
+    @include box;
+    & input, textarea {
+        width:100%;
+    }
+    & #image-clear_id {
+        width:15px;
+    }
+}
+
+.feed_button {
+        display:flex;
+        align-items: center;
+        justify-content: space-around;
+        & button {
+            margin:10px;
+            font-size: Large;
+        }
+}
+
+button {
+    margin:2px;
+    padding:2px;
+    & a {
+        text-decoration: none;
+        color: black;
+    }
+}
+
+h2 {
+    text-align:center;
 }
