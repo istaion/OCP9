@@ -131,13 +131,11 @@ def ticket_update(request, ticket_id):
 def follow_users(request):
     following = request.user.following.all()
     followed_by = request.user.followed_by.all()
-    follow_form = forms.UserFollowsForm()
+    follow_form = forms.UserFollowsForm(request_user=request.user)
     if request.method == 'POST':
-        follow_form = forms.UserFollowsForm(request.POST)
+        follow_form = forms.UserFollowsForm(request.POST, request_user=request.user)
         if follow_form.is_valid():
-            follow = follow_form.save(commit=False)
-            follow.user = request.user
-            follow.save()
+            follow_form.save()
             return redirect('follow_users')
     context = {
         'follow_form': follow_form,

@@ -1,6 +1,8 @@
 from django import forms
+from django.shortcuts import get_object_or_404
 
 from . import models
+from authentication import models as auth
 
 RATING_CHOICES = [
     (0, '0'),
@@ -39,11 +41,40 @@ class DeleteTicketForm(forms.Form):
 
 
 class UserFollowsForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop(
+            'request_user')
+        super(UserFollowsForm, self).__init__(*args, **kwargs)
+
+    followed_user = forms.CharField(
+        max_length=200, widget=forms.TextInput(attrs={"placeholder": "Nom d'utilisateur"})
+    )
+
     class Meta:
         model = models.UserFollows
-        fields = ['user', 'followed_user']
-        exclude = ['user']
-        labels = {'followed_user': 'Utilisateur à suivre :'}
+        fields = ["followed_user", "user"]
+        exclude = ["user"]
+        labels = {"followed_user": "s'abonner", }
+
+    def clean_followed_user(self):
+        username = self.cleaned_data.get("followed_user", None)
+        users = auth.User.objects.all()
+        if username == str(self.user):
+            raise forms.ValidationError("Vous ne pouvez pas vous follow")
+        elif str(username) not in [str(user.username) for user in users]:
+            raise forms.ValidationError("Cet utilisateur n'existe pas")
+        else:
+            followed_user = get_object_or_404(auth.User, username=username)
+        return followed_user
+
+    def save(self, commit=True):
+        follow = models.UserFollows(
+            user=self.user,
+            followed_user=self.clean_followed_user()
+        )
+        if commit:
+            follow.save()
+        return follow
 
 
 class DeleteUserFollowsForm(forms.Form):
