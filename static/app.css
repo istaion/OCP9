@@ -18,6 +18,10 @@
 .ticket__link {
   text-align: center;
 }
+.ticket__edit {
+  display: flex;
+  justify-content: right;
+}
 
 .review {
   border: 2px;
@@ -38,6 +42,10 @@
 }
 .review__link {
   text-align: center;
+}
+.review__edit {
+  display: flex;
+  justify-content: right;
 }
 
 #id_rating {
@@ -171,6 +179,9 @@
 }
 .review_form input, .review_form textarea {
   width: 100%;
+}
+.review_form #image-clear_id {
+  width: 15px;
 }
 
 .feed_button {

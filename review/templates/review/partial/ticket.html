@@ -21,12 +21,15 @@
     {% if ticket.image %}
         <img src="{{ ticket.image.url }}">
     {% endif %}
-    <p class="ticket__link">
         {% if not request.user in ticket|contributor_list %}
-            <button><a href="{% url 'review_response' ticket.id %}">Créer une critique</a></button>
+            <p class="ticket__link">
+                <button><a href="{% url 'review_response' ticket.id %}">Créer une critique</a></button>
+            </p>
         {% endif %}
-        {% if ticket.user == request.user %}
-            <button><a href="{% url 'ticket_update' ticket.id %}">Modifier</a></button>
+        {% if ticket.user == request.user and detailed %}
+            <div class="ticket__edit">
+                <button><a href="{% url 'ticket_update' ticket.id %}">Modifier</a></button>
+                <button><a href="{% url 'delete' ticket.id 'Ticket' %}">Supprimer</a></button>
+            </div>
         {% endif %}
-    </p>
 </div>

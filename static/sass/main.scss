@@ -21,6 +21,10 @@
   &__link {
     text-align: center
   }
+  &__edit {
+    display:flex;
+    justify-content: right;
+  }
 }
 
 .ticket {
@@ -141,6 +145,9 @@
     @include box;
     & input, textarea {
         width:100%;
+    }
+    & #image-clear_id {
+        width:15px;
     }
 }
 

@@ -33,6 +33,7 @@ urlpatterns = [
     path('posts/review/<int:ticket_id>/add', review.views.review_response, name='review_response'),
     path('posts/review/<int:review_id>/update', review.views.review_update, name='review_update'),
     path('posts/ticket/<int:ticket_id>/update', review.views.ticket_update, name='ticket_update'),
+    path('posts/delete/<int:instance_id>/<str:object_type>', review.views.object_delete, name='delete'),
     path('follow-users/', review.views.follow_users, name='follow_users'),
     path('follow-users/<int:follow_id>/stop-follow', review.views.stop_follow, name='stop_follow')
 ]
