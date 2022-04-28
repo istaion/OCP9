@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="review_form">
-        <h2>Modifier le commentaire :</h2>
-        {% include 'review/partial/review.html' with review=review update_button=False%}
-        <form method="post">
-            {{ edit_form.as_p }}
-            {% csrf_token %}
-            <button type="submit" >Sauvegarder</button>
-        </form>
-        <hr>
-        <h3>Supprimer le commmentaire ?</h3>
-        <button><a href="{% url 'delete' review.id 'Review' %}">Supprimer</a></button>
-    </div>
+    {% if review.user == request.user %}
+        <div class="review_form">
+            <h2>Modifier le commentaire :</h2>
+            {% include 'review/partial/review.html' with review=review update_button=False%}
+            <form method="post">
+                {{ edit_form.as_p }}
+                {% csrf_token %}
+                <button type="submit" >Sauvegarder</button>
+            </form>
+            <hr>
+            <h3>Supprimer le commmentaire ?</h3>
+            <button><a href="{% url 'delete' review.id 'Review' %}">Supprimer</a></button>
+        </div>
+    {% else %}
+        <p>Vous ne pouvez pas modifier un commentaire dont vous n'êtes pas l'auteur.</p>
+    {% endif %}
 {% endblock content %}

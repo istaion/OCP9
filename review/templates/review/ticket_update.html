@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="review_form">
-        <h2>Modifier le ticket</h2>
-        <form method="post">
-            {{ edit_form.as_p }}
-            {% csrf_token %}
-            <button type="submit" >Sauvegarder</button>
-        </form>
-        <hr>
-        <h3>Supprimer le ticket ?</h3>
-        <button><a href="{% url 'delete' ticket.id 'Ticket' %}">Supprimer</a></button>
-    </div>
+    {% if ticket.user == request.user %}
+        <div class="review_form">
+            <h2>Modifier le ticket</h2>
+            <form method="post">
+                {{ edit_form.as_p }}
+                {% csrf_token %}
+                <button type="submit" >Sauvegarder</button>
+            </form>
+            <hr>
+            <h3>Supprimer le ticket ?</h3>
+            <button><a href="{% url 'delete' ticket.id 'Ticket' %}">Supprimer</a></button>
+        </div>
+    {% else %}
+        <p>Vous ne pouvez pas modifier un ticket dont vous n'êtes pas l'auteur.</p>
+    {% endif %}
 {% endblock content %}
