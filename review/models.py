@@ -16,6 +16,9 @@ class Ticket(models.Model):
     IMAGE_MAX_SIZE = (400, 400)
 
     def resize_image(self):
+        """
+        to resize image before saving
+        """
         if self.image:
             image = Image.open(self.image)
             image.thumbnail(self.IMAGE_MAX_SIZE)
