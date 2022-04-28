@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load review_extras %}
 {% block content %}
+    {% if instance.user == request.user %}
         {% if instance|model_type == 'Ticket' %}
             <p>Voulez vous vraiment supprimer le Ticket : {{ instance.title }} ?</p>
             <form method="post">
@@ -16,4 +17,7 @@
                 <button type="submit" >Oui</button> <button><a href="{% url 'posts' %}">retour</a></button>
             </form>
         {% endif %}
+    {% else %}
+        <p>Vous ne pouvez supprimer que des tickets ou commentaires dont vous êtes l'auteur.</p>
+    {% endif %}
 {% endblock content %}
