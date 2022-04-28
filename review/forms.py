@@ -42,21 +42,26 @@ class DeleteTicketForm(forms.Form):
 
 class UserFollowsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
+        """
+        set request user in user
+        """
         self.user = kwargs.pop(
             'request_user')
         super(UserFollowsForm, self).__init__(*args, **kwargs)
 
     followed_user = forms.CharField(
-        max_length=200, widget=forms.TextInput(attrs={"placeholder": "Nom d'utilisateur"})
+        max_length=200, widget=forms.TextInput(attrs={"placeholder": "Nom d'utilisateur"}), label="s'abonner"
     )
 
     class Meta:
         model = models.UserFollows
         fields = ["followed_user", "user"]
         exclude = ["user"]
-        labels = {"followed_user": "s'abonner", }
 
     def clean_followed_user(self):
+        """
+        check if the user exist and get the user object correspondent to the text input
+        """
         username = self.cleaned_data.get("followed_user", None)
         users = auth.User.objects.all()
         if username == str(self.user):
