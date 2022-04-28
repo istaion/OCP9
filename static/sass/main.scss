@@ -113,15 +113,6 @@
         visibility: visible;
         opacity: 1;
     }
-    & ul {
-        visibility: hidden;
-        position: absolute;
-        opacity: 0;
-    }
-    & input:hover + ul {
-        visibility: visible;
-        opacity: 1;
-    }
 }
 
 .add_user {
