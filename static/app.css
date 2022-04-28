@@ -126,15 +126,6 @@
   visibility: visible;
   opacity: 1;
 }
-.signup ul {
-  visibility: hidden;
-  position: absolute;
-  opacity: 0;
-}
-.signup input:hover + ul {
-  visibility: visible;
-  opacity: 1;
-}
 
 .add_user {
   border: 2px;
