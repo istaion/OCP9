@@ -8,10 +8,12 @@ from . import models
 
 @login_required
 def feed(request):
-    tickets = models.Ticket.objects.filter(Q(user__in=request.user.follows.all()) | Q(user=request.user))
-    reviews = models.Review.objects.filter(Q(user__in=request.user.follows.all()) | Q(user=request.user))
+    user_tickets = models.Ticket.objects.filter(user=request.user)
+    other_tickets = models.Ticket.objects.filter(user__in=request.user.follows.all())
+    reviews = models.Review.objects.filter(Q(user__in=request.user.follows.all()) |
+                                           Q(user=request.user) | Q(ticket__in=user_tickets))
     tickets_and_reviews = sorted(
-        chain(tickets, reviews),
+        chain(user_tickets, other_tickets, reviews),
         key=lambda instance: instance.time_created,
         reverse=True
     )
