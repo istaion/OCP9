@@ -53,6 +53,9 @@ def ticket_add(request):
 
 @login_required
 def review_add(request):
+    """
+    to create a review without ticket
+    """
     ticket_form = forms.TicketForm()
     review_form = forms.ReviewForm()
     if request.method == 'POST':
@@ -78,6 +81,9 @@ def review_add(request):
 
 @login_required
 def review_response(request, ticket_id):
+    """
+    to create review in response of a ticket
+    """
     ticket = models.Ticket.objects.get(id=ticket_id)
     review_form = forms.ReviewForm()
     if request.method == 'POST':
@@ -145,6 +151,7 @@ def follow_users(request):
         'followed_by': followed_by,
     }
     return render(request, 'review/follow_users.html', context=context)
+
 
 @login_required
 def stop_follow(request, follow_id):
